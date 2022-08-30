@@ -50,11 +50,18 @@ is_game_on = True
 while is_game_on:
     screen.update()
     time.sleep(1)
-    for segment in segments:
-        if segment.xcor() > 260:
-            is_game_on = False
-        else:
-            segment.forward(20)
+
+    # The moving way of a snake: the 3rd segment moves to the 2nd segment's spot,
+    # then the 2nd segment moves to the 1st segment's position.
+    # The first segment will go the direction user assigned from user input
+    for index in range(len(segments) - 1, 0, -1):
+        x = segments[index - 1].xcor()
+        y = segments[index - 1].ycor()
+        segments[index].goto(x, y)
+    segments[0].forward(20)
+
+    if segments[0].xcor() > 280 or segments[0].ycor() > 280:
+        is_game_on = False
 
 
 # screen.listen()
