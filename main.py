@@ -39,13 +39,24 @@ while is_game_on:
         rate /= REDUCE_RATE
 
     if snake.head.xcor() > 280 or snake.head.xcor() < -300 or snake.head.ycor() > 300 or snake.head.ycor() < -290:
-        is_game_on = False
-        scoreboard.game_over()
+        play_again = screen.textinput(title="Play again?", prompt="Do you want to play again? (y/n): ")
+        if play_again == "y":
+            screen.listen()
+            scoreboard.reset()
+            snake.reset()
+            rate = INIT_SPEED
+        else:
+            is_game_on = False
 
     for segment in snake.segments[1:]:
         if snake.head.distance(segment) < 10:
-            is_game_on = False
-            scoreboard.game_over()
-
+            play_again = screen.textinput(title="Play again?", prompt="Do you want to play again? (y/n): ")
+            if play_again == "y":
+                screen.listen()
+                scoreboard.reset()
+                snake.reset()
+                rate = INIT_SPEED
+            else:
+                is_game_on = False
 
 screen.exitonclick()
